@@ -8,10 +8,10 @@
 		<version>3.0.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.kalapala</groupId>
-	<artifactId>A1</artifactId>
+	<groupId>com.kalapala.A1</groupId>
+	<artifactId>A1-docker-2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>A1</name>
+	<name>A1-docker-2</name>
 	<description>Project for CSCI 5409</description>
 	<properties>
 		<java.version>17</java.version>

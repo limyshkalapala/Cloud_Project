@@ -6,16 +6,21 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="A1" />
+        <module name="A1-docker-2" />
+        <module name="A1-docker-1" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="A1" target="17" />
+      <module name="A1-docker-1" target="17" />
+      <module name="A1-docker-2" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="A1" options="-parameters" />
+      <module name="A1-docker-1" options="-parameters" />
+      <module name="A1-docker-2" options="" />
     </option>
   </component>
 </project>
