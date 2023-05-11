@@ -1,5 +1,7 @@
 package com.kalapala.A1.A1docker1;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +13,13 @@ import java.net.URL;
 
 @Service
 public class ListenerService {
+
+    @Autowired
+    ObjectMapper objectMapper;
     public ResponseEntity<String> listener(FileRequestDTO fileRequestDTO) throws IOException {
         String url = "http://localhost:6001/listen";
-        String requestBody = fileRequestDTO.toString();
+        String jsonStr = objectMapper.writeValueAsString(fileRequestDTO);
+        String requestBody = jsonStr;
 
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
