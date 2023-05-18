@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 services:
   docker-1:
     build:
@@ -7,7 +7,7 @@ services:
     ports:
       - 6000:6000
     networks:
-      - docker-network
+      - my-network
 
   docker-2:
     build:
@@ -16,8 +16,9 @@ services:
     ports:
       - 6001:6001
     networks:
-      - docker-network
+      - my-network
 
 networks:
-  docker-network:
+  my-network:
+    name: my-network
     driver: bridge
