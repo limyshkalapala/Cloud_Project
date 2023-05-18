@@ -17,7 +17,7 @@ public class ListenerService {
     @Autowired
     ObjectMapper objectMapper;
     public ResponseEntity<String> listener(FileRequestDTO fileRequestDTO) throws IOException {
-        String url = "http://localhost:6001/listen";
+        String url = "http://docker-2:6001/listen";
         String jsonStr = objectMapper.writeValueAsString(fileRequestDTO);
         String requestBody = jsonStr;
 
