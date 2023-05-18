@@ -8,6 +8,8 @@ services:
       - 6000:6000
     networks:
       - my-network
+    volumes:
+      - .:/app
 
   docker-2:
     build:
@@ -17,6 +19,8 @@ services:
       - 6001:6001
     networks:
       - my-network
+    volumes:
+      - .:/app
 
 networks:
   my-network:
