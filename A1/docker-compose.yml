@@ -1,0 +1,23 @@
+version: '3'
+services:
+  docker-1:
+    build:
+      context: ./A1-docker-1
+      dockerfile: Dockerfile
+    ports:
+      - 6000:6000
+    networks:
+      - docker-network
+
+  docker-2:
+    build:
+      context: ./A1-docker-2
+      dockerfile: Dockerfile
+    ports:
+      - 6001:6001
+    networks:
+      - docker-network
+
+networks:
+  docker-network:
+    driver: bridge
