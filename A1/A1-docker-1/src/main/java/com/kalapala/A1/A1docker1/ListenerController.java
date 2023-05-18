@@ -1,13 +1,15 @@
 package com.kalapala.A1.A1docker1;
 
-import com.kalapala.A1.A1docker1.FileRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Scanner;
 
 @RestController
 public class ListenerController {
@@ -20,8 +22,15 @@ public class ListenerController {
         if(fileRequestDTO.getFile() == null){
             return ResponseEntity.ok("Error");
         }
-
+        String filePath = "/app/file.txt";
+        File file = new File(filePath);
         ResponseEntity<String> listener = listenerService.listener(fileRequestDTO);
-        return ResponseEntity.ok("ok");
+        if(file.exists()){
+            String fileContent = new String(Files.readAllBytes(Paths.get(filePath)));
+            return ResponseEntity.ok("true :"+ fileContent);
+        }
+        else{
+            return ResponseEntity.ok("false");
+        }
     }
 }

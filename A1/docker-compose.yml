@@ -1,8 +1,8 @@
+version: '3.7'
 services:
   docker-1:
-    build:
-      context: ./A1-docker-1
-      dockerfile: Dockerfile
+    image: limysh/a1-docker-1:latest
+
     ports:
       - 6000:6000
     networks:
@@ -11,9 +11,7 @@ services:
       - .:/app
 
   docker-2:
-    build:
-      context: ./A1-docker-2
-      dockerfile: Dockerfile
+    image: limysh/a1-docker-2:latest
     ports:
       - 6001:6001
     networks:
