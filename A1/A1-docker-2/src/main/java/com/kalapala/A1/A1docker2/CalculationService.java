@@ -53,7 +53,7 @@ public class CalculationService {
         if (lines.isEmpty()) {
             return false;
         }
-
+        lines.remove(0);
         for (String line : lines) {
             String[] parts = line.split(",");
             if (parts.length != 2) {
