@@ -20,7 +20,8 @@ public class ListenerService {
 
     @Autowired
     RestTemplate restTemplate;
-
+//  https://www.baeldung.com/rest-template
+//  Knew Rest Template, still took some help from here.
     public ResponseEntity<String> listener(FileRequestDTO fileRequestDTO) throws IOException {
         String url = "http://docker-2:6001/listen";
 

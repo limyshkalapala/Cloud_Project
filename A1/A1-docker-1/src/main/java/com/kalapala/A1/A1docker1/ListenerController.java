@@ -24,7 +24,6 @@ public class ListenerController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(convertObjectToJsonString(errorResponse));
         }
 
-        // Check if the file exists
         String filePath = "/app/" + fileRequestDTO.getFile();
         File file = new File(filePath);
         if (!file.exists()) {
@@ -32,7 +31,6 @@ public class ListenerController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(convertObjectToJsonString(errorResponse));
         }
 
-        // Invoke the listener service in the second container
         ResponseEntity<String> responseEntity = listenerService.listener(fileRequestDTO);
 
         return ResponseEntity.status(responseEntity.getStatusCode()).body(responseEntity.getBody());

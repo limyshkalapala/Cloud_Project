@@ -1,4 +1,6 @@
 # Stage 1: Build the JAR file
+#https://dzone.com/articles/build-package-and-run-spring-boot-apps-with-docker took help from
+# here to automatically build and run directly from the Dockerfile.
 FROM maven:3.8.3-openjdk-17 AS build
 WORKDIR /app
 COPY pom.xml .

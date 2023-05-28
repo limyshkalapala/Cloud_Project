@@ -17,6 +17,11 @@ public class CalculationService {
             String filePath = "/app/" + fileName;
             File file = new File(filePath);
 
+//           https://www.baeldung.com/java-json-escaping
+//           Took code snippets from here for the response string, note that I did not use Jackson Object mapper,
+//           because it was a custom message
+
+
             if (!file.exists()) {
                 return ResponseEntity.ok("{\"file\": \"" + fileName + "\", \"error\": \"File not found.\"}");
             }
@@ -38,7 +43,7 @@ public class CalculationService {
     }
     private int calculateSum(List<String> lines, String product) {
         int sum = 0;
-
+//https://www.baeldung.com/java-check-string-number code snippets from here to check if the string parts are integer or not.
         for (String line : lines) {
             String[] parts = line.split(",");
             if (parts.length == 2 && parts[0].trim().equals(product)) {
