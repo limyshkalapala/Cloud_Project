@@ -1,0 +1,24 @@
+services:
+  docker-1:
+    image: limysh/a1-docker-1:latest
+
+    ports:
+      - 6000:6000
+    networks:
+      - my-network
+    volumes:
+      - .:/app
+
+  docker-2:
+    image: limysh/a1-docker-2:latest
+    ports:
+      - 6001:6001
+    networks:
+      - my-network
+    volumes:
+      - .:/app
+
+networks:
+  my-network:
+    name: my-network
+    driver: bridge
