@@ -1,0 +1,23 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/csci-5409-cloud-389821/a1-docker-1:latest'
+      - '-f'
+      - 'dockerfile'
+      - '.'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'gcr.io/csci-5409-cloud-389821/a1-docker-1:latest'
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'a1-docker-1'
+      - '--image=gcr.io/csci-5409-cloud-389821/a1-docker-1:latest'
+      - '--region=us-central1'
+      - '--platform=managed'
