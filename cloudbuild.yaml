@@ -3,24 +3,14 @@ steps:
     args:
       - 'build'
       - '-t'
-      - 'gcr.io/csci-5409-cloud-389821/a1-docker-1'
+      - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:docker1'
       - '-f'
       - 'Dockerfile'
       - '.'
-
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
-      - 'gcr.io/csci-5409-cloud-389821/a1-docker-1'
-
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args:
-      - 'run'
-      - 'deploy'
-      - 'a1-docker-1'
-      - '--image=gcr.io/csci-5409-cloud-389821/a1-docker-1'
-      - '--region=us-central1'
-      - '--platform=managed'
+      - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:docker1'
 
 images:
-  - 'gcr.io/csci-5409-cloud-389821/a1-docker-1'
+  - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:docker1'
