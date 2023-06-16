@@ -3,14 +3,14 @@ steps:
     args:
       - 'build'
       - '-t'
-      - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:docker1:latest'
+      - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:latest'
       - '-f'
       - 'Dockerfile'
       - '.'
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
-      - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:docker1:latest'
+      - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:latest'
 
 images:
-  - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:docker1:latest'
+  - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:latest'
