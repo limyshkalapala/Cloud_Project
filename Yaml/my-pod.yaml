@@ -36,7 +36,7 @@ spec:
 
         - name: docker-1
 
-          image: us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8@sha256:bd1df87ec347255ca2aadbe29f4318c9900d4679b381a7d7f2caa4d1f323d265
+          image: us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8@sha256:d3b179b1c670f5d242b5683af181fdb1de2f3b5f01cfafb319112860eb177441
 
           volumeMounts:
 
@@ -53,63 +53,63 @@ spec:
             claimName: my-pvc
 
 
-#
-#
-#---
-#
-#
-#
-#
-#apiVersion: apps/v1
-#
-#kind: Deployment
-#
-#metadata:
-#
-#  name: docker-2
-#
-#  namespace: default
-#
-#  labels:
-#
-#    app: docker-2
-#
-#spec:
-#
-#  replicas: 3
-#
-#  selector:
-#
-#    matchLabels:
-#
-#      app: docker-2
-#
-#  template:
-#
-#    metadata:
-#
-#      labels:
-#
-#        app: docker-2
-#
-#    spec:
-#
-#      containers:
-#
-#        - name: docker-2
-#
-#          image: us-central1-docker.pkg.dev/cloud-389618/docker-2/a_1@sha256:c9ad0a2d0321b77056a08e91ba208987492b889cc40f7abb77a853947febc100
-#
-#          volumeMounts:
-#
-#            - name: app-volume
-#
-#              mountPath: /app
-#
-#      volumes:
-#
-#        - name: app-volume
-#
-#          persistentVolumeClaim:
-#
-#            claimName: my-pvc
+
+
+---
+
+
+
+
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+
+  name: docker-2
+
+  namespace: default
+
+  labels:
+
+    app: docker-2
+
+spec:
+
+  replicas: 3
+
+  selector:
+
+    matchLabels:
+
+      app: docker-2
+
+  template:
+
+    metadata:
+
+      labels:
+
+        app: docker-2
+
+    spec:
+
+      containers:
+
+        - name: docker-2
+
+          image: us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-2/k8@sha256:0d6e0ea0b5a0bacdae52df2f1080de1e261b82073072751a3a736e9def317d2a
+
+          volumeMounts:
+
+            - name: app-volume
+
+              mountPath: /app
+
+      volumes:
+
+        - name: app-volume
+
+          persistentVolumeClaim:
+
+            claimName: my-pvc
