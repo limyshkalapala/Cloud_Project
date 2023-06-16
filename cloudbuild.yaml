@@ -19,7 +19,7 @@ steps:
       - '-c'
       - |
         export CLOUDSDK_COMPUTE_REGION=us-central1
-        export CLOUDSDK_CONTAINER_CLUSTER=kubernetes-cluster
+        export CLOUDSDK_CONTAINER_CLUSTER=my-cluster
         export KUBECTL_VERSION=1.21
         gcloud container clusters get-credentials kubernetes-cluster --region us-central1 --project csci-5409-cloud-389821 --quiet &&
         kubectl apply -f my-pod.yaml
