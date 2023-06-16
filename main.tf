@@ -3,9 +3,6 @@ terraform {
     google = {
       source  = "hashicorp/google"
     }
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-    }
   }
 }
 
@@ -38,16 +35,3 @@ resource "google_compute_disk" "my_disk" {
   zone  = "us-central1-c"
 }
 
-resource "kubectl_manifest" "my_pv" {
-  yaml_body = file("${path.module}/my-pv.yaml")
-}
-
-resource "kubectl_manifest" "my_pvc" {
-  yaml_body  = file("${path.module}/my-pvc.yaml")
-  depends_on = [kubectl_manifest.my_pv]
-}
-
-resource "kubectl_manifest" "my_pod" {
-  yaml_body  = file("${path.module}/my-pod.yaml")
-  depends_on = [kubectl_manifest.my_pvc]
-}

@@ -7,23 +7,17 @@ steps:
       - '-f'
       - 'Dockerfile'
       - '.'
+
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
       - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:docker1'
-  - name: 'hashicorp/terraform:latest'
-    entrypoint: 'bash'
+
+  - name: 'gcr.io/cloud-builders/kubectl'
     args:
-      - '-c'
-      - |
-        terraform init
-        terraform validate
-        terraform plan -out=tfplan
-        terraform apply -auto-approve tfplan
-    env:
-      - 'GOOGLE_APPLICATION_CREDENTIALS=./csci-5409-cloud-389821-576de4354b9e.json'
-      - 'GOOGLE_PROJECT_ID=csci-5409-cloud-389821'
-      - 'GOOGLE_REGION=us-central1'
+      - 'apply'
+      - '-f'
+      - 'my-pod.yaml'
 
 images:
   - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:docker1'
