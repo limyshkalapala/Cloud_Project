@@ -59,7 +59,14 @@ public class CalculationService {
             return false;
         }
         lines.remove(0);
-        for (String line : lines) {
+
+        String header = lines.get(0);
+        if (!header.trim().equalsIgnoreCase("product,amount")) {
+            return false;
+        }
+
+        for (int i = 1; i < lines.size(); i++) {
+            String line = lines.get(i);
             String[] parts = line.split(",");
             if (parts.length != 2 || parts[0].trim().isEmpty() || parts[1].trim().isEmpty()) {
                 return false;
@@ -74,4 +81,5 @@ public class CalculationService {
 
         return true;
     }
+
 }
