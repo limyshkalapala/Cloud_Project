@@ -29,7 +29,7 @@ public class CalculationService {
             // Read and parse the CSV file
             List<String> lines = Files.readAllLines(Paths.get(filePath));
 
-            if (!isFileInCSVFormat(lines) || fileName.endsWith(".yml") ) {
+            if (!isFileInCSVFormat(lines) ) {
                 return ResponseEntity.ok("{\"file\": \"" + fileName + "\", \"error\": \"Input file not in CSV format.\"}");
             }
 
@@ -61,7 +61,7 @@ public class CalculationService {
         lines.remove(0);
         for (String line : lines) {
             String[] parts = line.split(",");
-            if (parts.length != 2) {
+            if (parts.length != 2 || parts[0].trim().isEmpty() || parts[1].trim().isEmpty()) {
                 return false;
             }
 
