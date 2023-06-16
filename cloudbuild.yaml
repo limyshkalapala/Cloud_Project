@@ -46,7 +46,7 @@ steps:
       - 'pvc'
     id: check-pvc
     entrypoint: bash
-    waitFor: [apply-pvc]
+    waitFor: ['apply-pvc']
 
 images:
   - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:docker1'
