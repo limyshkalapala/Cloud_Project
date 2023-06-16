@@ -30,7 +30,8 @@ public class CalculationService {
             List<String> lines = Files.readAllLines(Paths.get(filePath));
 
             if (!isFileInCSVFormat(lines) ) {
-                return ResponseEntity.ok("{\"file\": \"" + fileName + "\", \"error\": \"Input file not in CSV format.\"}");
+
+                return ResponseEntity.ok("{\"file "+lines+"\": \"" + fileName + "\", \"error\": \"Input file not in CSV format.\"}");
             }
 
             int sum = calculateSum(lines, product);
