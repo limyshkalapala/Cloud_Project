@@ -29,9 +29,8 @@ public class CalculationService {
             // Read and parse the CSV file
             List<String> lines = Files.readAllLines(Paths.get(filePath));
 
-            if (!isFileInCSVFormat(lines) ) {
-
-                return ResponseEntity.ok("{\"file "+lines+"\": \"" + fileName + "\", \"error\": \"Input file not in CSV format.\"}");
+            if (!isFileInCSVFormat(lines)) {
+                return ResponseEntity.ok("{\"file\": \"" + fileName + "\", \"error\": \"Input file not in CSV format.\"}");
             }
 
             int sum = calculateSum(lines, product);
@@ -64,10 +63,10 @@ public class CalculationService {
             return false;
         }
 
-        for (int i = 1; i < lines.size(); i++) {
-            String line = lines.get(i);
+        lines.remove(0);
+        for (String line : lines) {
             String[] parts = line.split(",");
-            if (parts.length != 2 || parts[0].trim().isEmpty() || parts[1].trim().isEmpty()) {
+            if (parts.length != 2) {
                 return false;
             }
 
@@ -80,5 +79,4 @@ public class CalculationService {
 
         return true;
     }
-
 }
