@@ -1,115 +1,16 @@
-apiVersion: apps/v1
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:docker1:latest'
+      - '-f'
+      - 'Dockerfile'
+      - '.'
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:docker1:latest'
 
-kind: Deployment
-
-metadata:
-
-  name: docker-1
-
-  namespace: default
-
-  labels:
-
-    app: docker-1
-
-spec:
-
-  replicas: 3
-
-  selector:
-
-    matchLabels:
-
-      app: docker-1
-
-  template:
-
-    metadata:
-
-      labels:
-
-        app: docker-1
-
-    spec:
-
-      containers:
-
-        - name: docker-1
-
-          image: us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8@sha256:bd1df87ec347255ca2aadbe29f4318c9900d4679b381a7d7f2caa4d1f323d265
-
-          volumeMounts:
-
-            - name: app-volume
-
-              mountPath: /app
-
-      volumes:
-
-        - name: app-volume
-
-          persistentVolumeClaim:
-
-            claimName: my-pvc
-
-
-#
-#
-#---
-#
-#
-#
-#
-#apiVersion: apps/v1
-#
-#kind: Deployment
-#
-#metadata:
-#
-#  name: docker-2
-#
-#  namespace: default
-#
-#  labels:
-#
-#    app: docker-2
-#
-#spec:
-#
-#  replicas: 3
-#
-#  selector:
-#
-#    matchLabels:
-#
-#      app: docker-2
-#
-#  template:
-#
-#    metadata:
-#
-#      labels:
-#
-#        app: docker-2
-#
-#    spec:
-#
-#      containers:
-#
-#        - name: docker-2
-#
-#          image: us-central1-docker.pkg.dev/cloud-389618/docker-2/a_1@sha256:c9ad0a2d0321b77056a08e91ba208987492b889cc40f7abb77a853947febc100
-#
-#          volumeMounts:
-#
-#            - name: app-volume
-#
-#              mountPath: /app
-#
-#      volumes:
-#
-#        - name: app-volume
-#
-#          persistentVolumeClaim:
-#
-#            claimName: my-pvc
+images:
+  - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:docker1:latest'
