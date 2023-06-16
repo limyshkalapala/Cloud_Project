@@ -14,16 +14,15 @@ steps:
       - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:docker1'
 
   - name: 'gcr.io/cloud-builders/kubectl'
+    entrypoint: 'bash'
     args:
-      - 'apply'
-      - '-f'
-      - './my-pod.yaml'
-
-  - name: 'gcr.io/cloud-builders/kubectl'
-    args:
-      - 'apply'
-      - '-f'
-      - 'deployment1.yaml'
+      - '-c'
+      - |
+        export CLOUDSDK_COMPUTE_REGION=us-central1
+        export CLOUDSDK_CONTAINER_CLUSTER=kubernetes-cluster
+        export KUBECTL_VERSION=1.21
+        gcloud container clusters get-credentials kubernetes-cluster --region us-central1 --project csci-5409-cloud-389821 --quiet &&
+        kubectl apply -f my-pod.yaml
 
 images:
   - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:docker1'
