@@ -36,7 +36,7 @@ spec:
 
         - name: docker-1
 
-          image: us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8@sha256:d3b179b1c670f5d242b5683af181fdb1de2f3b5f01cfafb319112860eb177441
+          image: us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8@sha256:b93738b21edac37330c2bdc409aeb322980f5b4303daafda5321cea1348471fe
 
           volumeMounts:
 
@@ -98,7 +98,7 @@ spec:
 
         - name: docker-2
 
-          image: us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-2/k8@sha256:0d6e0ea0b5a0bacdae52df2f1080de1e261b82073072751a3a736e9def317d2a
+          image: us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-2/k8@sha256:db1cc1a507139ad44b7e6e889c9fb6b352aefb714b2d5f9ee0ff6fa965a8e52e
 
           volumeMounts:
 
