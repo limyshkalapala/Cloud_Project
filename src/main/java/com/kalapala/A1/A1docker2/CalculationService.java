@@ -58,8 +58,6 @@ public class CalculationService {
         if (lines.isEmpty()) {
             return false;
         }
-        lines.remove(0);
-
         String header = lines.get(0);
         if (!header.trim().equalsIgnoreCase("product,amount")) {
             return false;
