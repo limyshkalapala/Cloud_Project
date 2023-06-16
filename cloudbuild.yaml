@@ -7,46 +7,23 @@ steps:
       - '-f'
       - 'Dockerfile'
       - '.'
-
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
       - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:docker1'
-
-  - name: 'gcr.io/cloud-builders/kubectl'
-    entrypoint: '/builder/kubectl'
+  - name: 'hashicorp/terraform:latest'
+    entrypoint: 'bash'
     args:
-      - 'apply'
-      - '-f'
-      - 'my-pv.yaml'
-    id: apply-pv
-    waitFor: ['-']
-
-  - name: 'gcr.io/cloud-builders/kubectl'
-    entrypoint: '/builder/kubectl'
-    args:
-      - 'apply'
-      - '-f'
-      - 'my-pvc.yaml'
-    id: apply-pvc
-    waitFor: ['-']
-
-  - name: 'gcr.io/cloud-builders/kubectl'
-    entrypoint: '/builder/kubectl'
-    args:
-      - 'apply'
-      - '-f'
-      - 'my-pod.yaml'
-    id: apply-pod
-    waitFor: ['-']
-
-  - name: 'gcr.io/cloud-builders/kubectl'
-    entrypoint: '/builder/kubectl'
-    args:
-      - 'get'
-      - 'pvc'
-    id: check-pvc
-    waitFor: ['apply-pvc']
+      - '-c'
+      - |
+        terraform init
+        terraform validate
+        terraform plan -out=tfplan
+        terraform apply -auto-approve tfplan
+    env:
+      - 'GOOGLE_APPLICATION_CREDENTIALS=./csci-5409-cloud-389821-576de4354b9e.json'
+      - 'GOOGLE_PROJECT_ID=csci-5409-cloud-389821'
+      - 'GOOGLE_REGION=us-central1'
 
 images:
   - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:docker1'
