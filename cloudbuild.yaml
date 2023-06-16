@@ -14,38 +14,38 @@ steps:
       - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:docker1'
 
   - name: 'gcr.io/cloud-builders/kubectl'
+    entrypoint: '/builder/kubectl'
     args:
       - 'apply'
       - '-f'
-      - './my-pv.yaml'
+      - 'my-pv.yaml'
     id: apply-pv
-    entrypoint: bash
     waitFor: ['-']
 
   - name: 'gcr.io/cloud-builders/kubectl'
+    entrypoint: '/builder/kubectl'
     args:
       - 'apply'
       - '-f'
-      - './my-pvc.yaml'
+      - 'my-pvc.yaml'
     id: apply-pvc
-    entrypoint: bash
     waitFor: ['-']
 
   - name: 'gcr.io/cloud-builders/kubectl'
+    entrypoint: '/builder/kubectl'
     args:
       - 'apply'
       - '-f'
-      - './my-pod.yaml'
+      - 'my-pod.yaml'
     id: apply-pod
-    entrypoint: bash
     waitFor: ['-']
 
   - name: 'gcr.io/cloud-builders/kubectl'
+    entrypoint: '/builder/kubectl'
     args:
       - 'get'
       - 'pvc'
     id: check-pvc
-    entrypoint: bash
     waitFor: ['apply-pvc']
 
 images:
