@@ -12,5 +12,5 @@ FROM openjdk:19
 VOLUME /tmp
 EXPOSE 6001
 ARG JAR_FILE=/app/target/A1-docker-2-0.0.1-SNAPSHOT.jar
-COPY --from=build ${JAR_FILE} app.jar
+COPY --from=build ${JAR_FILE} app.jar 
 ENTRYPOINT ["java","-jar","/app.jar"]
