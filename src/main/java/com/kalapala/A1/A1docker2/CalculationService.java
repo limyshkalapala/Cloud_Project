@@ -58,11 +58,9 @@ public class CalculationService {
         if (lines.isEmpty()) {
             return false;
         }
-        String header = lines.get(0);
-        if (!header.trim().equalsIgnoreCase("product,amount")) {
+        if(!lines.get(0).contains("product")){
             return false;
         }
-
         lines.remove(0);
         for (String line : lines) {
             String[] parts = line.split(",");
