@@ -7,10 +7,46 @@ steps:
       - '-f'
       - 'Dockerfile'
       - '.'
+
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
       - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:docker1'
+
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      - 'apply'
+      - '-f'
+      - 'my-pv.yaml'
+    id: apply-pv
+    entrypoint: bash
+    waitFor: ['-']
+
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      - 'apply'
+      - '-f'
+      - 'my-pvc.yaml'
+    id: apply-pvc
+    entrypoint: bash
+    waitFor: ['-']
+
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      - 'apply'
+      - '-f'
+      - 'my-pod.yaml'
+    id: apply-pod
+    entrypoint: bash
+    waitFor: ['-']
+
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      - 'get'
+      - 'pvc'
+    id: check-pvc
+    entrypoint: bash
+    waitFor: [apply-pvc]
 
 images:
   - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:docker1'
