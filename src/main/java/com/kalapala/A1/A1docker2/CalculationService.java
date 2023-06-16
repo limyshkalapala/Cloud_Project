@@ -35,7 +35,7 @@ public class CalculationService {
 
             int sum = calculateSum(lines, product);
 
-            return ResponseEntity.ok("{\"file\": \"" + fileName + "\", \"sum\": " + sum + "}");
+            return ResponseEntity.ok("{\"file\": \"" + fileName + "\", \"sum\": \"" + sum + "\"}");
         } catch (IOException e) {
             return ResponseEntity.ok("{\"file\": \"" + fileName + "\", \"error\": \"Input file not in CSV format.\"}");
         }
