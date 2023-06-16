@@ -1,16 +1,15 @@
 # Stage 1: Build the JAR file
-#https://dzone.com/articles/build-package-and-run-spring-boot-apps-with-docker took help from
-# here to automatically build and run directly from  Dockerfile.
 FROM maven:3.8.3-openjdk-17 AS build
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 RUN mvn clean package -DskipTests
+RUN cp target/*.jar app.jar
 
 # Stage 2: Create the final container
-FROM openjdk:19
+FROM openjdk:17
 VOLUME /tmp
 EXPOSE 6000
-ARG JAR_FILE=/app/target/A1-docker-1-0.0.1-SNAPSHOT.jar
-COPY --from=build ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+WORKDIR /app
+COPY --from=build /app/app.jar .
+ENTRYPOINT ["java","-jar","app.jar"]
