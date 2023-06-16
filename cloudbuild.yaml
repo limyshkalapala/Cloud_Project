@@ -17,10 +17,13 @@ steps:
     args:
       - 'apply'
       - '-f'
-      - 'my-pod.yaml'
-    volumes:
-      - name: 'config'
-        path: '/workspace'
+      - './my-pod.yaml'
+
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      - 'apply'
+      - '-f'
+      - 'deployment1.yaml'
 
 images:
   - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:docker1'
