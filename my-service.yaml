@@ -1,0 +1,10 @@
+kind: Service
+metadata:
+  name: docker-1-service
+spec:
+  selector:
+    app: docker-1
+  ports:
+    - protocol: TCP
+      port: 6000
+      targetPort: 6000
