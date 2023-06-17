@@ -7,21 +7,33 @@ steps:
       - '-f'
       - 'Dockerfile'
       - '.'
+
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
       - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:docker1'
+
   - name: 'gcr.io/cloud-builders/kubectl'
+    entrypoint: 'bash'
     args:
-      - 'set'
-      - 'image'
-      - 'deployment/docker-1'
-      - 'docker-1=us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:docker1'
-  - name: 'gcr.io/cloud-builders/kubectl'
-    args:
-      - 'apply'
-      - '-f'
-      - 'my-pod.yaml'
+      - '-c'
+      - |
+        export CLOUDSDK_COMPUTE_REGION=us-central1-c
+        export CLOUDSDK_CONTAINER_CLUSTER=my-cluster
+        export KUBECTL_VERSION=1.21
+        gcloud container clusters get-credentials my-cluster --region us-central1-c --project csci-5409-cloud-389821 --quiet &&
+        kubectl apply -f my-pod.yaml
 
 images:
   - 'us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-1/k8:docker1'
+---
+kind: Service
+metadata:
+  name: docker-1-service
+spec:
+  selector:
+    app: docker-1
+  ports:
+    - protocol: TCP
+      port: 6000
+      targetPort: 6000
