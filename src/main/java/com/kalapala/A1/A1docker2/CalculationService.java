@@ -66,6 +66,7 @@ public class CalculationService {
             String[] parts = line.split(",");
             if (parts.length != 2) {
                 return false;
+//
             }
 
             try {
