@@ -23,7 +23,7 @@ public class ListenerService {
 //  https://www.baeldung.com/rest-template
 //  Knew Rest Template, still took some help from here.
     public ResponseEntity<String> listener(FileRequestDTO fileRequestDTO) throws IOException {
-        String url = "http://34.132.221.136:6001/listen";
+        String url = "http://docker-2-service:6001/listen";
 
     HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
