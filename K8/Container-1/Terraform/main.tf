@@ -34,3 +34,4 @@ resource "google_compute_disk" "my_disk" {
   size  = 1
   zone  = "us-central1-c"
 }
+
