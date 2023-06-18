@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+
+  name: docker-2
+
+  namespace: default
+
+  labels:
+
+    app: docker-2
+
+spec:
+
+  replicas: 3
+
+  selector:
+
+    matchLabels:
+
+      app: docker-2
+
+  template:
+
+    metadata:
+
+      labels:
+
+        app: docker-2
+
+    spec:
+
+      containers:
+
+        - name: docker-2
+
+          image: us-central1-docker.pkg.dev/csci-5409-cloud-389821/docker-2/k8:docker2
+
+          volumeMounts:
+
+            - name: app-volume
+
+              mountPath: /app
+
+      volumes:
+
+        - name: app-volume
+
+          persistentVolumeClaim:
+
+            claimName: my-pvc
+
