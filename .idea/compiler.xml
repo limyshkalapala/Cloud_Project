@@ -8,12 +8,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="A1-docker-2" />
         <module name="A1-docker-1" />
+        <module name="backend" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="A1" target="17" />
       <module name="A1-docker-1" target="17" />
       <module name="A1-docker-2" target="17" />
+      <module name="backend" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -21,6 +23,7 @@
       <module name="A1" options="-parameters" />
       <module name="A1-docker-1" options="-parameters" />
       <module name="A1-docker-2" options="-parameters" />
+      <module name="backend" options="-parameters" />
     </option>
   </component>
 </project>
