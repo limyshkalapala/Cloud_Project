@@ -11,11 +11,16 @@ Resources:
         S3Key: "test-lambda.py.zip"
       Runtime: 'python3.8'
 
+  MySQSQueueStandard:  # Corrected indentation here
+    Type: 'AWS::SQS::Queue'
+    Properties:
+      QueueName: IncidentReportCf
+
   ApiGateway:
     Type: AWS::ApiGateway::RestApi
     Properties:
       Name: testAPI
-  
+
   LambdaTestPermission:
     Type: "AWS::Lambda::Permission"
     Properties:
@@ -110,3 +115,4 @@ Outputs:
   APIGatewayURL:
     Description: "API Gateway URL"
     Value: !Sub "https://${ApiGateway}.execute-api.${AWS::Region}.amazonaws.com/production"
+
