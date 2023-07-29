@@ -10,6 +10,7 @@ Resources:
         S3Bucket: "b00934899-lambda-cloud-formation"
         S3Key: "test-lambda.py.zip"
       Runtime: 'python3.8'
+
   readFromQueueCf:
     Type: 'AWS::Lambda::Function'
     Properties:
@@ -33,6 +34,7 @@ Resources:
         S3Key: "triggerHurricane.py.zip"
       Runtime: 'python3.8'
       Timeout: 5
+
   triggerOilSpillCf:
     Type: 'AWS::Lambda::Function'
     Properties:
@@ -44,6 +46,7 @@ Resources:
         S3Key: "triggerOilSpill.py.zip"
       Runtime: 'python3.8'
       Timeout: 5
+
   triggerManOverboardCf:
     Type: 'AWS::Lambda::Function'
     Properties:
@@ -56,10 +59,12 @@ Resources:
       Runtime: 'python3.8'
       Timeout: 5
 
-  MySQSQueueStandard:  # Corrected indentation here
+  MySQSQueueStandard:
     Type: 'AWS::SQS::Queue'
     Properties:
       QueueName: IncidentReportCf
+
+
 
   ApiGateway:
     Type: AWS::ApiGateway::RestApi
@@ -140,7 +145,6 @@ Resources:
             method.response.header.Access-Control-Allow-Origin: true
           StatusCode: "200"
 
-
   ApiDeployment:
     Type: AWS::ApiGateway::Deployment
     DependsOn:
@@ -155,9 +159,120 @@ Resources:
       DeploymentId: !Ref ApiDeployment
       StageName: production
       Description: Production Stage
+  StepFunctionStateMachine:
+    Type: AWS::StepFunctions::StateMachine
+    Properties:
+      StateMachineName: TriggerLambdaBasedOnIncidentType
+      DefinitionString:
+        Fn::Sub:
+          - |
+            {
+              "Comment": "Step Function for Triggering Lambda Based on Incident Type",
+              "StartAt": "ProcessQueueEvent",
+              "States": {
+                "ProcessQueueEvent": {
+                  "Type": "Task",
+                  "Resource": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:readFromQueueCf",
+                  "ResultPath": "$.detail.result",
+                  "Next": "ProcessIncidentEvent"
+                },
+                "ProcessIncidentEvent": {
+                  "Type": "Choice",
+                  "Choices": [
+                    {
+                      "Variable": "$.detail.result.type",
+                      "StringEquals": "Hurricane",
+                      "Next": "triggerHurricane"
+                    },
+                    {
+                      "Variable": "$.detail.result.type",
+                      "StringEquals": "Oil Spill",
+                      "Next": "triggerOilSpill"
+                    },
+                    {
+                      "Variable": "$.detail.result.type",
+                      "StringEquals": "Man Overboard",
+                      "Next": "triggerManOverboard"
+                    }
+                  ],
+                  "Default": "ProcessQueueEvent"
+                },
+                "triggerHurricane": {
+                  "Type": "Task",
+                  "Resource": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:triggerHurricaneCf",
+                  "InputPath": "$.detail.result",
+                  "End": true
+                },
+                "triggerOilSpill": {
+                  "Type": "Task",
+                  "Resource": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:triggerOilSpillCf",
+                  "InputPath": "$.detail.result",
+                  "End": true
+                },
+                "triggerManOverboard": {
+                  "Type": "Task",
+                  "Resource": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:triggerManOverboardCf",
+                  "InputPath": "$.detail.result",
+                  "End": true
+                }
+              }
+            }
+          - {}
+      RoleArn: 'arn:aws:iam::209474665153:role/LabRole'
+  HurricaneAlertCfTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      DisplayName: "Hurricane Alert SNS Topic"
+      TopicName: "HurricaneAlertCfTopic"
+
+  ManOverboardAlertCfTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      DisplayName: "Man Overboard Alert SNS Topic"
+      TopicName: "ManOverboardAlertCfTopic"
+
+  OilSpillCfAlertTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      DisplayName: "Oil Spill Alert SNS Topic"
+      TopicName: "OilSpillCfAlertTopic"
+
+  HurricaneAlertCfTopicSubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      Protocol: email
+      TopicArn: !Ref HurricaneAlertCfTopic
+      Endpoint: "limysh310@gmail.com"
+
+  # Subscription for ManOverboardAlertCfTopic
+  ManOverboardAlertCfTopicSubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      Protocol: email
+      TopicArn: !Ref ManOverboardAlertCfTopic
+      Endpoint: "limysh310@gmail.com"
+
+  # Subscription for OilSpillCfAlertTopic
+  OilSpillCfAlertTopicSubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      Protocol: email
+      TopicArn: !Ref OilSpillCfAlertTopic
+      Endpoint: "limysh310@gmail.com"
 
 Outputs:
   APIGatewayURL:
     Description: "API Gateway URL"
     Value: !Sub "https://${ApiGateway}.execute-api.${AWS::Region}.amazonaws.com/production"
 
+  HurricaneAlertTopicARN:
+    Description: "ARN of Hurricane Alert SNS Topic"
+    Value: !Ref HurricaneAlertCfTopic
+
+  ManOverboardAlertTopicARN:
+    Description: "ARN of Man Overboard Alert SNS Topic"
+    Value: !Ref ManOverboardAlertCfTopic
+
+  OilSpillAlertTopicARN:
+    Description: "ARN of Oil Spill Alert SNS Topic"
+    Value: !Ref OilSpillCfAlertTopic
