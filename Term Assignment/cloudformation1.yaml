@@ -1,5 +1,33 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Resources:
+  IncidentReportsBucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: b00934899-incident-reports-cf
+      WebsiteConfiguration:
+        IndexDocument: index.html
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+
+
+  IncidentReportsBucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    Properties:
+      Bucket: !Ref IncidentReportsBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: PublicReadGetObject
+            Effect: Allow
+            Principal: '*'
+            Action:
+              - 's3:GetObject'
+            Resource:
+              - !Sub 'arn:aws:s3:::${IncidentReportsBucket}/*'
+
   processIncidentCf:
     Type: 'AWS::Lambda::Function'
     Properties:
@@ -63,8 +91,6 @@ Resources:
     Type: 'AWS::SQS::Queue'
     Properties:
       QueueName: IncidentReportCf
-
-
 
   ApiGateway:
     Type: AWS::ApiGateway::RestApi
@@ -159,6 +185,7 @@ Resources:
       DeploymentId: !Ref ApiDeployment
       StageName: production
       Description: Production Stage
+
   StepFunctionStateMachine:
     Type: AWS::StepFunctions::StateMachine
     Properties:
@@ -219,6 +246,7 @@ Resources:
             }
           - {}
       RoleArn: 'arn:aws:iam::209474665153:role/LabRole'
+
   HurricaneAlertCfTopic:
     Type: AWS::SNS::Topic
     Properties:
