@@ -288,6 +288,23 @@ Resources:
       TopicArn: !Ref OilSpillCfAlertTopic
       Endpoint: "limysh310@gmail.com"
 
+  StateMachineTriggerRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Description: "Rule to trigger Step Function every one minute"
+      ScheduleExpression: "rate(1 minute)"
+      State: "ENABLED"
+      Targets:
+        -
+          Arn:
+            Fn::GetAtt:
+              - "StepFunctionStateMachine"
+              - "Arn"
+          Id: "TriggerStepFunction"
+          RoleArn: 'arn:aws:iam::209474665153:role/LabRole'
+
+
+
 Outputs:
   APIGatewayURL:
     Description: "API Gateway URL"
