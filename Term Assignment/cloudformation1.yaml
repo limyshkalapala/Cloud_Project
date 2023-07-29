@@ -22,6 +22,40 @@ Resources:
       Runtime: 'python3.8'
       Timeout: 10
 
+  triggerHurricaneCf:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: 'triggerHurricaneCf'
+      Handler: 'triggerHurricane.lambda_handler'
+      Role: 'arn:aws:iam::209474665153:role/LabRole'
+      Code:
+        S3Bucket: "b00934899-lambda-cloud-formation"
+        S3Key: "triggerHurricane.py.zip"
+      Runtime: 'python3.8'
+      Timeout: 5
+  triggerOilSpillCf:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: 'triggerOilSpillCf'
+      Handler: 'triggerOilSpill.lambda_handler'
+      Role: 'arn:aws:iam::209474665153:role/LabRole'
+      Code:
+        S3Bucket: "b00934899-lambda-cloud-formation"
+        S3Key: "triggerOilSpill.py.zip"
+      Runtime: 'python3.8'
+      Timeout: 5
+  triggerManOverboardCf:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: 'triggerManOverboardCf'
+      Handler: 'triggerManOverboard.lambda_handler'
+      Role: 'arn:aws:iam::209474665153:role/LabRole'
+      Code:
+        S3Bucket: "b00934899-lambda-cloud-formation"
+        S3Key: "triggerManOverboard.py.zip"
+      Runtime: 'python3.8'
+      Timeout: 5
+
   MySQSQueueStandard:  # Corrected indentation here
     Type: 'AWS::SQS::Queue'
     Properties:
