@@ -81,7 +81,7 @@ public class LambdaService {
                 byte[] imageBytes = Base64.getDecoder().decode(imageStringSplit);
 
                 // Create a unique S3 key for the image using the current timestamp
-                String s3Key = "hurricane_image_" + new Date().getTime() + ".jpg";
+                String s3Key = "incident_images/hurricane_image_" + new Date().getTime() + ".jpg";
                 AmazonS3 s3client = s3Client();
                 InputStream imageStream = new ByteArrayInputStream(imageBytes);
                 ObjectMetadata metadata = new ObjectMetadata();
