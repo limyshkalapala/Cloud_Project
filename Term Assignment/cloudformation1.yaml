@@ -10,6 +10,17 @@ Resources:
         S3Bucket: "b00934899-lambda-cloud-formation"
         S3Key: "test-lambda.py.zip"
       Runtime: 'python3.8'
+  readFromQueueCf:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: 'readFromQueueCf'
+      Handler: 'read-from-queue.lambda_handler'
+      Role: 'arn:aws:iam::209474665153:role/LabRole'
+      Code:
+        S3Bucket: "b00934899-lambda-cloud-formation"
+        S3Key: "read-from-queue.py.zip"
+      Runtime: 'python3.8'
+      Timeout: 10
 
   MySQSQueueStandard:  # Corrected indentation here
     Type: 'AWS::SQS::Queue'
