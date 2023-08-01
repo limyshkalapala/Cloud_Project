@@ -3,7 +3,7 @@ Resources:
   IncidentReportsBucket:
     Type: 'AWS::S3::Bucket'
     Properties:
-      BucketName: b00934899-incident-reports-cf
+      BucketName: b00934899-incident-reports-cf-final
       WebsiteConfiguration:
         IndexDocument: index.html
       PublicAccessBlockConfiguration:
@@ -33,9 +33,9 @@ Resources:
     Properties:
       FunctionName: 'processIncidentCf'
       Handler: 'test-lambda.lambda_handler'
-      Role: 'arn:aws:iam::209474665153:role/LabRole'
+      Role: 'arn:aws:iam::196551330648:role/LabRole'
       Code:
-        S3Bucket: "b00934899-lambda-cloud-formation"
+        S3Bucket: "b00934899-lambda-cloud-formation-cf"
         S3Key: "test-lambda.py.zip"
       Runtime: 'python3.8'
 
@@ -44,9 +44,9 @@ Resources:
     Properties:
       FunctionName: 'readFromQueueCf'
       Handler: 'read-from-queue.lambda_handler'
-      Role: 'arn:aws:iam::209474665153:role/LabRole'
+      Role: 'arn:aws:iam::196551330648:role/LabRole'
       Code:
-        S3Bucket: "b00934899-lambda-cloud-formation"
+        S3Bucket: "b00934899-lambda-cloud-formation-cf"
         S3Key: "read-from-queue.py.zip"
       Runtime: 'python3.8'
       Timeout: 10
@@ -56,9 +56,9 @@ Resources:
     Properties:
       FunctionName: 'triggerHurricaneCf'
       Handler: 'triggerHurricane.lambda_handler'
-      Role: 'arn:aws:iam::209474665153:role/LabRole'
+      Role: 'arn:aws:iam::196551330648:role/LabRole'
       Code:
-        S3Bucket: "b00934899-lambda-cloud-formation"
+        S3Bucket: "b00934899-lambda-cloud-formation-cf"
         S3Key: "triggerHurricane.py.zip"
       Runtime: 'python3.8'
       Timeout: 5
@@ -68,9 +68,9 @@ Resources:
     Properties:
       FunctionName: 'triggerOilSpillCf'
       Handler: 'triggerOilSpill.lambda_handler'
-      Role: 'arn:aws:iam::209474665153:role/LabRole'
+      Role: 'arn:aws:iam::196551330648:role/LabRole'
       Code:
-        S3Bucket: "b00934899-lambda-cloud-formation"
+        S3Bucket: "b00934899-lambda-cloud-formation-cf"
         S3Key: "triggerOilSpill.py.zip"
       Runtime: 'python3.8'
       Timeout: 5
@@ -80,9 +80,9 @@ Resources:
     Properties:
       FunctionName: 'triggerManOverboardCf'
       Handler: 'triggerManOverboard.lambda_handler'
-      Role: 'arn:aws:iam::209474665153:role/LabRole'
+      Role: 'arn:aws:iam::196551330648:role/LabRole'
       Code:
-        S3Bucket: "b00934899-lambda-cloud-formation"
+        S3Bucket: "b00934899-lambda-cloud-formation-cf"
         S3Key: "triggerManOverboard.py.zip"
       Runtime: 'python3.8'
       Timeout: 5
@@ -245,7 +245,7 @@ Resources:
               }
             }
           - {}
-      RoleArn: 'arn:aws:iam::209474665153:role/LabRole'
+      RoleArn: 'arn:aws:iam::196551330648:role/LabRole'
 
   HurricaneAlertCfTopic:
     Type: AWS::SNS::Topic
@@ -293,7 +293,7 @@ Resources:
     Properties:
       Description: "Rule to trigger Step Function every one minute"
       ScheduleExpression: "rate(1 minute)"
-      State: "ENABLED"
+      State: "DISABLED"
       Targets:
         -
           Arn:
@@ -301,7 +301,7 @@ Resources:
               - "StepFunctionStateMachine"
               - "Arn"
           Id: "TriggerStepFunction"
-          RoleArn: 'arn:aws:iam::209474665153:role/LabRole'
+          RoleArn: 'arn:aws:iam::196551330648:role/LabRole'
 
 
 

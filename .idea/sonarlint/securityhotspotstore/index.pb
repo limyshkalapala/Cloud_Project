@@ -213,3 +213,7 @@ r
 B.idea/libraries/Maven__com_amazonaws_aws_java_sdk_ssm_1_11_163.xml,f/2/f252d43e1494f8d86aed841951b2cd39627b8c39
 r
 B.idea/libraries/Maven__com_amazonaws_aws_java_sdk_sqs_1_11_163.xml,9/2/9258e3951c9052bb16dfe6a8b8951ff3a3c03329
+h
+8.idea/libraries/Maven__javax_xml_bind_jaxb_api_2_3_1.xml,a/2/a2c249d3925e2c040835368e8fe52698abc5188d
+v
+F.idea/libraries/Maven__javax_activation_javax_activation_api_1_2_0.xml,a/a/aacb7d6eb9dd5dbacb525386cd565fc743b22dab
